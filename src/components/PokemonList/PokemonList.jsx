@@ -13,17 +13,22 @@ function PokemonList(){
 
     async function downloadPokemons() {
         setIsLoding(true)
-        const response = await axios.get(pokedexUrl);
+        const response = await axios.get(pokedexUrl); // this downloads list of 20 pokemons
 
-        const pokemonResults = response.data.results;
+        const pokemonResults = response.data.results; // we get the array of pokemons from result
 
         console.log(response.data);
+
+        // iteratting over the array of pokemons, and using their url, to create an array of promises
+        //that willl download those 20 pokemons
         setNextUrl(response.data.next);
         setPrevUrl(response.data.previous);
 
         const pokemonResultPromise = pokemonResults.map((pokemon)=> axios.get(pokemon.url));
         const pokemonData = await axios.all(pokemonResultPromise);
         console.log(pokemonData);
+
+        // now iterate on the data of each pokemon, and extract id, name, image, types 
         const  pokeListResult = pokemonData.map((pokeData) => {
             const pokemon = pokeData.data;
             return {
