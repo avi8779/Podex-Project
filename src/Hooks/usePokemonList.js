@@ -20,8 +20,6 @@ function usePokemonList() {
 
             const pokemonResults = response.data.results; // we get the array of pokemons from result
 
-            console.log("response ise", response.data);
-            console.log(pokemonListState);
             setpokemonListState((state) => ({
                 ...state,
                 nextUrl:response.data.next,
